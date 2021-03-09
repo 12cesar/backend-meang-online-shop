@@ -26,7 +26,7 @@ async function init(){
     const db=await database.init();
     const context=async({req,connection}:IContext)=>{
         const token=(req) ? req.headers.authorization : connection.authorization;
-        return {db,token}
+        return {db,token};
     };
     const server=new ApolloServer({
         schema,
