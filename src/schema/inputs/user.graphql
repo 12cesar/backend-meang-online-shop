@@ -1,0 +1,17 @@
+"INPUT PARA AÑADIR LOS DATOS DEL USUARIO EN EL REGISTRO"
+input UserInput{
+    "En este caso no obligatorio"
+    id:ID
+    "Nombre de la pila"
+    name:String!
+    "Apellido de la pila"
+    lastname:String!
+    "Correo del asociado a la cuenta"
+    email:String!
+    "Contraseña del asociado a la cuenta"
+    password:String!
+    "Registrar su edad de naciemiento"
+    birthday:String!
+    "Permisos de usuario"
+    role:Role=CLIENT
+}

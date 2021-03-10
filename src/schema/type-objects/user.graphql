@@ -1,0 +1,25 @@
+"""
+Vamos a especficar la informacion detallada del usuarios
+* vamos a tener en cuenta:
+    email= usuario del cliente de la base de datos (Clientes/Admin)
+    Fechad e nacimiento y registro en formato ISO
+"""
+type User{
+    "Identificado unico"
+    id:ID!
+    "Nombre de la pila"
+    name:String!
+    "Apellido de la pila"
+    lastname:String!
+    "Correo del asociado a la cuenta"
+    email:String!
+    "Contraseña del asociado a la cuenta"
+    password:String!
+    "Registrar fechad e registro"
+    registerDate:String!
+    "Registrar su edad de naciemiento"
+    birthday:String!
+    "Permisos de usuario"
+    role:Role!
+}
+

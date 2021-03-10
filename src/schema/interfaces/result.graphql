@@ -1,0 +1,7 @@
+"Interface para especificar las propiedas obligatorias en las respuestas"
+interface Result{
+    "Estado de la operacion"
+    status:Boolean!
+    "Mensaje de ña operacion para dar feedback"
+    message:String!
+}
