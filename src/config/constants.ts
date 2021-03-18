@@ -7,7 +7,8 @@ if (process.env.NODE_ENV !== 'production') {
 export const SECRET_KEY=process.env.SECRET || 'JulioCesarCursoGraphqlOnline';
 
 export enum COLLECTIONS {
-    USERS='users'
+    USERS='users',
+    GENRES='genres'
 }
 export enum MESSAGES {
     TOKEN_VERICATION_FAILED='Token no valido, inicia sesion de nuevo'

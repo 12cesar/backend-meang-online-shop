@@ -14,7 +14,7 @@ type User{
     "Correo del asociado a la cuenta"
     email:String!
     "Contraseña del asociado a la cuenta"
-    password:String!
+    password:String
     "Registrar fechad e registro"
     registerDate:String!
     "Registrar su edad de naciemiento"

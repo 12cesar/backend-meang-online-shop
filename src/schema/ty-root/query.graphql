@@ -6,6 +6,8 @@ type Query{
     login(email:String!,password:String!):Resultlogin
     "Autenticarnos mediante token"
     me:ResultUser
-    "Mostrar lista de productors"
-    products:Boolean
+    "Mostrar lista de generos"
+    genres:ResultGenres
+    "Mostrar informacion de un genero"
+    genre(id:ID!):ResultGenre
 }
