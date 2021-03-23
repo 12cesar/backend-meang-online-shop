@@ -1,13 +1,13 @@
 import { IResolvers } from 'graphql-tools';
-import { COLLECTIONS, EXPIRETIME, MESSAGES } from './../../config/constants';
-import JWT from './../../lib/jwt';
-import bcrypt from 'bcrypt';
-import { findElements, findOneElement } from '../../lib/db-operations';
+import { pagination } from '../../lib/pagination';
 import UserService from '../../services/user.service';
 const resolversUserQuery: IResolvers = {
   Query: {
-    async users(_, __, context) {
-        return new UserService(_,__,context).items();
+    async users(_, variables, context) {
+      
+      console.log(variables);
+      
+        return new UserService(_,{pagination:variables},context).items();
     },
     async login(_, { email, password }, context) {
         return new UserService(_,{user: {email,password}},context).login();

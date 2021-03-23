@@ -3,6 +3,7 @@ import { IContextData } from '../interfaces/context-data.interface';
 import { IVariables } from '../interfaces/variables.interface';
 import { deleteOne, findElements, findOneElement, insertOneElement, updateOneElement } from '../lib/db-operations';
 import { Db } from 'mongodb';
+import { pagination } from '../lib/pagination';
 
 class ResolversOperationsService{
     private root:object;
@@ -17,15 +18,25 @@ class ResolversOperationsService{
     protected getDb():Db{return this.context.db!;}
     protected getVariables():IVariables{return this.variables;}
     // Listar informaciones
-    protected async list(collection:string, listElement:string){
+    protected async list(collection:string, listElement:string,page:number=1,itemsPage:number=20){
         try {
+            
+            const paginationData=await pagination(this.getDb(),collection,page,itemsPage);
+                       
             return { 
+                info:{
+                    page:paginationData.page,
+                    pages:paginationData.pages,
+                    itemsPage:paginationData.itemsPage,
+                    total:paginationData.total
+                },
                 status:true,
                 message: `Lista de ${listElement} correctamente cargada`,
-                item: await findElements(this.getDb(),collection)
+                item: await findElements(this.getDb(),collection,{},paginationData)
             };
         } catch (error) {
             return { 
+                info:null,
                 status:false,
                 message: `Lista de ${listElement} no cargada: ${error}`,
                 item: null
