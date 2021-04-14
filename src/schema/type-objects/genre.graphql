@@ -3,4 +3,6 @@ type Genre implements Item{
     id:ID!
     name:String!
     slug:String!
+    "Señalar si se encuentra activo"
+    active:Boolean
 }

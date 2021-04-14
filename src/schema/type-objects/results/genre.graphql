@@ -5,4 +5,5 @@ type ResultGenre implements Result{
     message:String!
     "Informacion del genero"
     genre: Genre
+    
 }

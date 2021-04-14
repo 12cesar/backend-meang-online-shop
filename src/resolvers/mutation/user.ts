@@ -5,17 +5,20 @@ import { asignDocumentId, findOneElement, insertOneElement } from '../../lib/db-
 import UserService from '../../services/user.service';
 const resolversUserMutation:IResolvers={
     Mutation: {
-        async register(_, {user}, context){
+        register(_, {user}, context){
             //Comprobar que el usuario no existe 
             return new UserService(_,{user},context).register();
         },
-        async updateUser(_, {user}, context){
+        updateUser(_, {user}, context){
             //Comprobar que el usuario no existe 
             return new UserService(_,{user},context).modify();
         },
-        async deleteUser(_, {id}, context){
+        deleteUser(_, {id}, context){
             //Comprobar que el usuario no existe 
             return new UserService(_,{id},context).delete();
+        },
+        blockUser(_,{id},context){
+            return new UserService(_,{id},context).block();  
         }
     }
 };

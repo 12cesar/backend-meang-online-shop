@@ -9,9 +9,11 @@ input UserInput{
     "Correo del asociado a la cuenta"
     email:String!
     "Contraseña del asociado a la cuenta"
-    password:String!
+    password:String
     "Registrar su edad de naciemiento"
     birthday:String!
     "Permisos de usuario"
     role:Role=CLIENT
+    "Usuario Activo"
+    active:Boolean
 }

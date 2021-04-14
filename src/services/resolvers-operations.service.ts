@@ -18,10 +18,10 @@ class ResolversOperationsService{
     protected getDb():Db{return this.context.db!;}
     protected getVariables():IVariables{return this.variables;}
     // Listar informaciones
-    protected async list(collection:string, listElement:string,page:number=1,itemsPage:number=20){
+    protected async list(collection:string, listElement:string,page:number=1,itemsPage:number=20, filter: object={active:{$ne: false}}){
         try {
             
-            const paginationData=await pagination(this.getDb(),collection,page,itemsPage);
+            const paginationData=await pagination(this.getDb(),collection,page,itemsPage,filter);
                        
             return { 
                 info:{
@@ -32,7 +32,7 @@ class ResolversOperationsService{
                 },
                 status:true,
                 message: `Lista de ${listElement} correctamente cargada`,
-                item: await findElements(this.getDb(),collection,{},paginationData)
+                item: await findElements(this.getDb(),collection,filter,paginationData)
             };
         } catch (error) {
             return { 
