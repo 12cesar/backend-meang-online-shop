@@ -1,0 +1,11 @@
+"Tipo de objeto para almacenar informacion de los tags de videojuegos"
+type Tag implements Item{
+    "Agregar ID del tag"
+    id:ID!
+    "Agregar el nombre del tag"
+    name:String!
+    "Agregar el slug del tag"
+    slug:String!
+    "Señalar si se encuentra activo"
+    active:Boolean
+}

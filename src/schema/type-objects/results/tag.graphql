@@ -1,9 +1,9 @@
-type ResultGenres implements Result{
-    info:ResultInfo
+type ResultTag implements Result{
+    
     "Estado de la operacion"
     status:Boolean!
     "Mensaje de la operacion para dar feedback"
     message:String!
-    "Informacion del genero"   
-    genres:[Genre!]
+    "Informacion del genero"
+    tag:Tag
 }

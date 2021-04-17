@@ -1,7 +1,10 @@
 "Tipo de objeto para almacenar informacion de generos de videojuegos"
 type Genre implements Item{
+    "Agregar ID del genero"
     id:ID!
+    "Agregar el nombre del genero"
     name:String!
+    "Agregar el slug del genero"
     slug:String!
     "Señalar si se encuentra activo"
     active:Boolean

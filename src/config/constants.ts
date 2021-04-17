@@ -8,7 +8,9 @@ export const SECRET_KEY=process.env.SECRET || 'JulioCesarCursoGraphqlOnline';
 
 export enum COLLECTIONS {
     USERS='users',
-    GENRES='genres'
+    GENRES='genres',
+    TAGS='tags',
+    PLATFORMS='platforms'
 }
 export enum MESSAGES {
     TOKEN_VERICATION_FAILED='Token no valido, inicia sesion de nuevo'

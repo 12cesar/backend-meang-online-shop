@@ -10,4 +10,12 @@ type Query{
     genres(page:Int=1,itemsPage:Int=20):ResultGenres
     "Mostrar informacion de un genero"
     genre(id:ID!):ResultGenre
+    "Mostrar lista de tags"
+    tags(page:Int=1,itemsPage:Int=20):ResultTags
+    "Mostrar informacion de un tag"
+    tag(id:ID!):ResultTag
+    "Mostrar lista de plataformas"
+    platforms(page:Int=1,itemsPage:Int=20):ResultPlatforms
+    "Mostrar informacion de una plataforma"
+    platform(id:ID!):ResultPlatform
 }

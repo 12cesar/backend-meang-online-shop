@@ -1,4 +1,3 @@
-import { COLLECTIONS } from '../config/constants';
 import { IContextData } from '../interfaces/context-data.interface';
 import { IVariables } from '../interfaces/variables.interface';
 import { deleteOne, findElements, findOneElement, insertOneElement, updateOneElement } from '../lib/db-operations';
@@ -18,9 +17,8 @@ class ResolversOperationsService{
     protected getDb():Db{return this.context.db!;}
     protected getVariables():IVariables{return this.variables;}
     // Listar informaciones
-    protected async list(collection:string, listElement:string,page:number=1,itemsPage:number=20, filter: object={active:{$ne: false}}){
+    protected async list(collection:string, listElement:string, page:number=1, itemsPage:number=20, filter: object = {active:{$ne: false}}){
         try {
-            
             const paginationData=await pagination(this.getDb(),collection,page,itemsPage,filter);
                        
             return { 
@@ -43,8 +41,7 @@ class ResolversOperationsService{
             };
         }
     }
-    // Obtener detalles de
-    
+    // Obtener detalles del item
     protected async get(collection:string){
             const collectionLabel=collection.toLowerCase();
         try {

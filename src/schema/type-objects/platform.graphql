@@ -1,0 +1,10 @@
+type Platform implements Item{
+    "Agregar ID del tag"
+    id:ID!
+    "Agregar el nombre del tag"
+    name:String!
+    "Agregar el slug del tag"
+    slug:String!
+    "Señalar si se encuentra activo"
+    active:Boolean
+}
