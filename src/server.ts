@@ -8,11 +8,11 @@ import { createServer } from 'http';
 import environments from './config/environments';
 import Database from './lib/database';
 import { IContext } from './interfaces/context.interface';
+import chalk from 'chalk';
 
 //Configuracion de las variables de entorno (lectura)
 if (process.env.NODE_ENV !== 'production') {
     const env=environments;
-    console.log(env);
     
 }
 async function init(){
@@ -41,12 +41,17 @@ async function init(){
     }));
     
     const httpServer=createServer(app);
-    const PORT=process.env.PORT || 2002;
+    const PORT=process.env.PORT;
     httpServer.listen(
         {
             port:PORT
         },
-        ()=>console.log(`http://localhost:${PORT} API MEANG - Online Shop Start`)
+        ()=>{
+            console.log('====================SERVER API GRAPHQL=======================');
+            console.log(`STATUS: ${chalk.greenBright('ONLINE')}`);
+            console.log(`MESSAGE: ${chalk.greenBright('API MEANG - Online Shop CONNECT!!')}`);   
+            console.log(`http://localhost:${PORT}`)
+        }
         
     );
 }

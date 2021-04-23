@@ -4,100 +4,100 @@ import { deleteOne, findElements, findOneElement, insertOneElement, updateOneEle
 import { Db } from 'mongodb';
 import { pagination } from '../lib/pagination';
 
-class ResolversOperationsService{
-    private root:object;
-    private variables:IVariables;
-    private context:IContextData;
-    constructor(root: object, variables: IVariables, context:IContextData){
-        this.root=root;
-        this.variables=variables;
-        this.context=context;
+class ResolversOperationsService {
+    private root: object;
+    private variables: IVariables;
+    private context: IContextData;
+    constructor(root: object, variables: IVariables, context: IContextData) {
+        this.root = root;
+        this.variables = variables;
+        this.context = context;
     }
-    protected getContext():IContextData{return this.context;}
-    protected getDb():Db{return this.context.db!;}
-    protected getVariables():IVariables{return this.variables;}
+    protected getContext(): IContextData { return this.context; }
+    protected getDb(): Db { return this.context.db!; }
+    protected getVariables(): IVariables { return this.variables; }
     // Listar informaciones
-    protected async list(collection:string, listElement:string, page:number=1, itemsPage:number=20, filter: object = {active:{$ne: false}}){
+    protected async list(collection: string, listElement: string, page: number = 1, itemsPage: number = 20, filter: object = { active: { $ne: false } }) {
         try {
-            const paginationData=await pagination(this.getDb(),collection,page,itemsPage,filter);
-                       
-            return { 
-                info:{
-                    page:paginationData.page,
-                    pages:paginationData.pages,
-                    itemsPage:paginationData.itemsPage,
-                    total:paginationData.total
+            const paginationData = await pagination(this.getDb(), collection, page, itemsPage, filter);
+
+            return {
+                info: {
+                    page: paginationData.page,
+                    pages: paginationData.pages,
+                    itemsPage: paginationData.itemsPage,
+                    total: paginationData.total
                 },
-                status:true,
+                status: true,
                 message: `Lista de ${listElement} correctamente cargada`,
-                item: await findElements(this.getDb(),collection,filter,paginationData)
+                item: await findElements(this.getDb(), collection, filter, paginationData)
             };
         } catch (error) {
-            return { 
-                info:null,
-                status:false,
+            return {
+                info: null,
+                status: false,
                 message: `Lista de ${listElement} no cargada: ${error}`,
                 item: null
             };
         }
     }
     // Obtener detalles del item
-    protected async get(collection:string){
-            const collectionLabel=collection.toLowerCase();
+    protected async get(collection: string) {
+        const collectionLabel = collection.toLowerCase();
         try {
-            return await findOneElement(this.getDb(),collection,{id:this.variables.id}).then(
+            return await findOneElement(this.getDb(), collection, { id: this.variables.id }).then(
                 result => {
-                    if(result){
-                        return{
-                            status:true,
+                    if (result) {
+                        return {
+                            status: true,
                             message: `${collectionLabel} ha sido cargada correctamente con sus detalles`,
-                            item:result
+                            item: result
                         };
                     }
-                    return{
-                        status:true,
+                    return {
+                        status: true,
                         message: `${collectionLabel} no ha obtenido detalles porque no existe`,
-                        item:null
+                        item: null
                     };
                 }
             );
         } catch (error) {
-            return{
-                status:false,
-                message:`Error inesperado al queres cargar los detalles de ${collectionLabel}`,
-                item:null
+            return {
+                status: false,
+                message: `Error inesperado al queres cargar los detalles de ${collectionLabel}`,
+                item: null
             };
         }
     }
     // Añadir item
-    protected async add(collection:string, document:object, item:string){
+    protected async add(collection: string, document: object, item: string) {
         try {
-            return await insertOneElement(this.getDb(),collection,document).then(
+            return await insertOneElement(this.getDb(), collection, document).then(
                 res => {
-                    if (res.result.ok===1) {
-                        return{
-                            status:true,
-                            message:`Añadido correctamente el ${item}.`,
-                            item:document
+                    if (res.result.ok === 1) {
+                        return {
+                            status: true,
+                            message: `Añadido correctamente el ${item}.`,
+                            item: document
                         };
                     }
-                    return{
-                        status:false,
-                        message:`No se ha insertado el ${item}. Intentalo de nuevo por favor`,
-                        item:null
+                    return {
+                        status: false,
+                        message: `No se ha insertado el ${item}. Intentalo de nuevo por favor`,
+                        item: null
                     };
                 }
             );
         } catch (error) {
-            return{
-                status:false,
-                message:`Error inesperado al insertar el ${item}. Intentalo de nuevo por favor`,
-                item:null
+            return {
+                status: false,
+                message: `Error inesperado al insertar el ${item}. Intentalo de nuevo por favor`,
+                item: null
             };
         }
     }
     // Modificar item
-    protected async update(collection:string,filter:object,objectUpdate:object,item:string){
+    protected async update(collection: string, filter: object, objectUpdate: object, item: string) {
         try {
             return await updateOneElement(
                 this.getDb(),
@@ -105,51 +105,51 @@ class ResolversOperationsService{
                 filter,
                 objectUpdate
             ).then(
-                res=>{
-                    if(res.result.nModified===1 && res.result.ok){
-                        return{
-                            status:true,
-                            message:`Elemento del ${item} actualizado correctamente.`,
-                            item:Object.assign({},filter,objectUpdate)
+                res => {
+                    if (res.result.nModified === 1 && res.result.ok) {
+                        return {
+                            status: true,
+                            message: `Elemento del ${item} actualizado correctamente.`,
+                            item: Object.assign({}, filter, objectUpdate)
                         };
                     }
-                    return{
-                        status:false,
-                        message:`Elemento del ${item} no se ha actualizado. Comprueba que estas filtrando correctamente o simplemente no hay nada que actualizar.`,
-                        item:null
+                    return {
+                        status: false,
+                        message: `Elemento del ${item} no se ha actualizado. Comprueba que estas filtrando correctamente o simplemente no hay nada que actualizar.`,
+                        item: null
                     };
                 }
             );
         } catch (error) {
-            return{
-                status:false,
-                message:`Error inesperado al actualizar el ${item}. Intentalo de nuevo`,
-                item:null
+            return {
+                status: false,
+                message: `Error inesperado al actualizar el ${item}. Intentalo de nuevo`,
+                item: null
             }
         }
     }
     // Eliminar item
-    protected async del(collection:string,filter:object,item:string){
+    protected async del(collection: string, filter: object, item: string) {
         try {
-            return await deleteOne(this.getDb(),collection,filter).then(
-                (res)=>{
-                    if(res.deletedCount===1){
-                        return{
-                            status:true,
-                            message:`Elemento del ${item} borrado correctamente.`
+            return await deleteOne(this.getDb(), collection, filter).then(
+                (res) => {
+                    if (res.deletedCount === 1) {
+                        return {
+                            status: true,
+                            message: `Elemento del ${item} borrado correctamente.`
                         };
                     }
-                    return{
-                        status:false,
-                        message:`Elemento del ${item} no se ha borrado comprueba el filtro.`
+                    return {
+                        status: false,
+                        message: `Elemento del ${item} no se ha borrado comprueba el filtro.`
                     };
                 }
             );
         } catch (error) {
-            return{
-                status:false,
-                message:`Error inesperado no se ha podido eliminar el ${item}. Intentalo de nuevo`,
-                item:null
+            return {
+                status: false,
+                message: `Error inesperado no se ha podido eliminar el ${item}. Intentalo de nuevo`,
+                item: null
             };
         }
     }
