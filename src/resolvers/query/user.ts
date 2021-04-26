@@ -1,13 +1,11 @@
 import { IResolvers } from 'graphql-tools';
-import { pagination } from '../../lib/pagination';
 import UserService from '../../services/user.service';
 const resolversUserQuery: IResolvers = {
   Query: {
-    async users(_, variables, context) {
+    async users(_, {page,itemsPage,active}, context) {
+      console.log(active);
       
-      console.log(variables);
-      
-        return new UserService(_,{pagination:variables},context).items();
+        return new UserService(_,{pagination:{page,itemsPage}},context).items(active);
     },
     async login(_, { email, password }, context) {
         return new UserService(_,{user: {email,password}},context).login();

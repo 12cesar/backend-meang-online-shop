@@ -1,6 +1,7 @@
+import { ACTIVE_VALUES_FILTER } from './../config/constants';
 import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
 import { IContextData } from '../interfaces/context-data.interface';
-import { asignDocumentId, findOneElement, insertOneElement } from '../lib/db-operations';
+import { asignDocumentId, findOneElement } from '../lib/db-operations';
 import ResolversOperationsService from './resolvers-operations.service';
 import bcrypt from 'bcrypt';
 import JWT from '../lib/jwt';
@@ -12,14 +13,22 @@ class UserService extends ResolversOperationsService {
   }
 
   // Lista de usuarios
-  async items() {
+  async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE) {
+    console.log('service', active);
+    let filter: object = {active:{$ne:false}};
+    if (active === ACTIVE_VALUES_FILTER.ALL) {
+      filter = {};
+    }else if (active === ACTIVE_VALUES_FILTER.INACTIVE) {
+      filter = {active:{$eq:false}};
+    }
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;
     const result = await this.list(
       this.collection,
       'usuarios',
       page,
-      itemsPage
+      itemsPage,
+      filter
     );
     return {
       info: result.info,
@@ -176,7 +185,7 @@ class UserService extends ResolversOperationsService {
       message: result.message,
     };
   }
-  async unblock(unblock: Boolean) {
+  async unblock(unblock: boolean, admin: boolean) {
     const id = this.getVariables().id;
     const user = this.getVariables().user;
     if (!this.checkData(String(id) || '')) {
@@ -193,7 +202,9 @@ class UserService extends ResolversOperationsService {
       };
     }
     let update = { active: unblock };
-    if (unblock) {
+    if (unblock && !admin) {
+      console.log('Soy cliente y estoy cambiando la contraseña');
+      
       update = Object.assign({}, { active: true },
         {
           birthday: user?.birthday,

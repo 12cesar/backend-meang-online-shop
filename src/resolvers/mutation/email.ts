@@ -26,7 +26,7 @@ const resolversMailMutation:IResolvers={
                     message: verificar.message
                 };
             } 
-            return new UserService(_,{id, user:{birthday, password}},{token, db}).unblock(true);
+            return new UserService(_,{id, user:{birthday, password}},{token, db}).unblock(true, false);
         },
         async resetPassword(_,{email},{db}){
             return new PasswordService(_,{user:{email}},{db}).sendMail();                      
