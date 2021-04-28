@@ -1,0 +1,4 @@
+type Mutation {
+    "Apartadod e operaciones donde trabajamos con los plataformas"
+    addPlatform(platform:String!):ResultPlatform
+}

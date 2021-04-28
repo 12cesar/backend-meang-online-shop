@@ -1,0 +1,7 @@
+type Rating{
+    "Valor medio de las valoracions"
+    value: Float!
+    "Cantidad de valoraziones realziadas"
+    count: Int!
+
+}

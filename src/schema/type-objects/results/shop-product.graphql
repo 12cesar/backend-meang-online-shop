@@ -1,0 +1,11 @@
+type ResultShopProduct implements Result{
+    info:ResultInfo
+    "Estado de la operacion"
+    status:Boolean!
+    "Mensaje de la operacion para dar feedback"
+    message:String!
+    "Producto de la tienda seleccionado"
+    shopProduct: ShopProduct
+    "Lista de Productos de la tienda "
+    shopProducts: [ShopProduct!]
+}

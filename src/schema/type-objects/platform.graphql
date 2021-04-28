@@ -6,5 +6,5 @@ type Platform implements Item{
     "Agregar el slug del tag"
     slug:String!
     "Señalar si se encuentra activo"
-    active:Boolean
+    active:Boolean!
 }

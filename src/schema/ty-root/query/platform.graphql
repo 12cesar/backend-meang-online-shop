@@ -1,0 +1,6 @@
+type Query {
+    "Mostrar lista de plataformas"
+    platforms(page:Int=1,itemsPage:Int=20):ResultPlatforms
+    "Mostrar informacion de una plataforma"
+    platform(id:ID!):ResultPlatform
+}

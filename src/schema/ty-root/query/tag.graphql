@@ -1,0 +1,6 @@
+type Query {
+    "Mostrar lista de tags"
+    tags(page:Int=1,itemsPage:Int=20):ResultTags
+    "Mostrar informacion de un tag"
+    tag(id:ID!):ResultTag
+}
