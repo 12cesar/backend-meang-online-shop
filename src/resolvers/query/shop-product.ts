@@ -1,4 +1,6 @@
 import { IResolvers } from 'graphql-tools';
+import { COLLECTIONS } from '../../config/constants';
+import { findElements, findOneElement } from '../../lib/db-operations';
 import ShopProductsService from '../../services/shop-product.service';
 const resolversProductsQuery: IResolvers = {
   Query: {
@@ -41,6 +43,15 @@ const resolversProductsQuery: IResolvers = {
         context
       ).items(active, ['-1'], random, otherFilters);
     },
+    shopProductDetails(_,{id},context){
+      console.log(id, typeof id);
+      return new ShopProductsService(
+        _,
+        { id },
+        context
+      ).details();      
+    }
+      
   },
 };
 
