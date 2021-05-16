@@ -23,5 +23,7 @@ type User{
     role:Role!
     "Usuario activo"
     active:Boolean
+    "Cliente de Stripe"
+    stripeCustomer: String
 }
 

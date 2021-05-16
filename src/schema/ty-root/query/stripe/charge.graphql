@@ -1,0 +1,12 @@
+type Query {
+    "Mostrar la informacion de los pagos por clientes con paginacíon"
+    chargesByCustomers(
+        "Cliente seleccionado"
+        customer: ID!
+        "Para limitar los resultados, de 1 a 100 (incluido)"
+        limit: Int = 5
+        "Para especificar la primera posicion posterior a la seleccion del usuario"
+        startingAfter: ID = ""
+        "Terminar antes de este ususario (para mostrar los anteriores)"
+        endingBefore: ID = ""): ResultStripeCharge
+}

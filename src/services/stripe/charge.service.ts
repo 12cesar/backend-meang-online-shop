@@ -1,4 +1,5 @@
-import { IPayment } from '../../interfaces/stripe/charge.interface';
+import { IStripeCharge } from '../../interfaces/stripe/charge.interface';
+import { IPayment } from '../../interfaces/stripe/payment.interface';
 import StripeApi, { STRIPE_ACTIONS, STRIPE_OBJECTS } from '../../lib/stripe-api';
 import StripeCarService from './card.service';
 import StripeCustomerService from './customer.service';
@@ -54,6 +55,21 @@ class StripeChargeService extends StripeApi{
                 charge: result
             };
         }).catch((error: Error) => this.getError(error));
+    }
+    async list(customer: string, limit: number = 5, startingAfter: string, endingBefore: string){
+        const pagination = this.getPagination(startingAfter, endingBefore);
+        return await this.execute(
+            STRIPE_OBJECTS.CHARGES,
+            STRIPE_ACTIONS.LIST,
+            {limit, customer, ...pagination}
+        ).then((result: {has_more: boolean, data: Array<IStripeCharge>}) => {
+            return {
+                status: true,
+                message: 'Lista cargada correctamente con los pagos del cliente seleccionado',
+                hasMore: result.has_more,
+                charges: result.data
+            };
+          }).catch((error: Error) => this.getError(error) );
     }
 }
 
