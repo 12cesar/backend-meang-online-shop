@@ -112,9 +112,7 @@ export const manageStockUpdate = async (
   collection: string,
   filter: object,
   updateObject: object
-) => {  
-  console.log(collection);
-  
+) => {    
   return await database
     .collection(collection)
     .updateOne(filter, { $inc: updateObject });
